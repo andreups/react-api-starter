@@ -16,6 +16,8 @@ import User from './components/user/User';
 //Import NoMath (404) Component
 import NoMatch from "./components/noMatch/NoMatch";
 
+import Jeopardy from './components/jeopardy/Jeopardy';
+
 function App() {
   return (
     <div className="App">
@@ -41,6 +43,11 @@ function App() {
         <Route
           path="/user/:id"
           component={User}
+        />
+        <Route
+          exact
+          path="/jeopardy"
+          component={Jeopardy}
         />
         <Route
           path="*"

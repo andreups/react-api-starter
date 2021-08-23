@@ -11,6 +11,9 @@ const Navigation = (props) => {
                 <li>
                     <Link to="/users">Users</Link>
                 </li>
+                <li>
+                    <Link to="/jeopardy">Play Jeopardy</Link>
+                </li>
             </ul>
         </nav>
     );
