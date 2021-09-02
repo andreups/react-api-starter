@@ -10,7 +10,7 @@ class Jeopardy extends Component {
   }
 
   //get a new random question from the API and add it to the data object in state
-  getNewQuestion() {
+  getNewQuestion = (event) => {
     //use fetch to make an API call and get a random Jeopardy question (returns a promise)
     fetch(`https://jservice.io/api/random`)
         //on success of the fetch request, turn the response that came back into JSON
@@ -45,21 +45,36 @@ handleChange = (event) => {
 };
 
 handleSubmit = (event) => {
+  // Preventing the page from reloading
     event.preventDefault();
-}
+   
+    if (this.state.currentAnswer.toLowerCase() === this.state.data.answer.toLowerCase()){
+      this.setState((state, props) => ({
+        score: state.score + this.state.data.value,
+        currentAnswer: ""
+      }));
+    } else {
+      this.setState((state, props) => ({
+        score: state.score - this.state.data.value,
+        currentAnswer: ""
+      }));
+    }
+    this.getNewQuestion()
+    
+    }
 
   //display the results on the screen
   render() {
      return (
       <div>
-        <div>Category: {!this.state.isLoading? this.state.data.category.title : null}</div>
+        <div>Category: {!this.state.isLoading ? this.state.data.category.title : null}</div>
         {/* Displaying the question to help you get started */}
         <div>Question: {this.state.data.question}</div>
         <div>Value: {this.state.data.value}</div>
-      <form>
+      <form onSubmit={this.handleSubmit}>
           <label>
                 Answer: 
-                <input type ="text" onChange={this.handleChange}  name="name"/>
+                <input type ="text" onChange={this.handleChange} value={this.state.currentAnswer} name="userAnswer"/>
           </label>
           <label>
               <input type="submit" name="submit"/>
